@@ -1,4 +1,11 @@
 *.log
 *.pot
 *.pyc
-local_settings.py
+tmp
+*.DS_Store
+*~
+.svn
+build
+database/*.sql
+*.geany
+static/js/*-ck.js

@@ -1,0 +1,64 @@
+{% load oembed_tags %}
+
+<div id="primary_media_block" class="slideshow">
+
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $(".rslides").responsiveSlides({
+                    auto: {{ page.slideshow.auto }},
+                    speed: {{ page.slideshow.speed }},
+                    timeout: {{ page.slideshow.timeout }},
+                    pager: {{ page.slideshow.pager }},
+                    nav: {{ page.slideshow.nav }},
+                    prevText: "previous",
+                    nextText: "next"
+                });
+
+                $('.rslides_nav').addClass('ss-icon');
+
+            });
+        </script>
+
+        <ul class="rslides">
+
+            {% for slide in page.slideshow.slide_set.all %}
+                {% if slide.display %}
+                    <li>
+                        <figure>
+                            {% if slide.url %}
+                                <a href="{{ slide.url }}">
+                            {% endif %}
+                                {% if slide.image %}
+                                    <img src="{{ slide.image.url }}" alt="{{ slide.title }}">
+                                {% endif %}
+                                {% if slide.media_embed %}
+                                    {% oembed %}
+                                        {{ slide.media_embed }}
+                                    {% endoembed %}
+                                {% endif %}
+                            {% if slide.url %}
+                                </a>
+                            {% endif %}
+                            {% if slide.title or slide.content %}
+                                <figcaption>
+                                    {% if slide.url %}
+                                        <a href="{{ slide.url }}">
+                                    {% endif %}
+                                        {% if slide.title %}
+                                            <h3>{{ slide.title }}</h3>
+                                        {% endif %}
+                                    {% if slide.url %}
+                                        </a>
+                                    {% endif %}
+                                    {% if slide.content %}
+                                        <p>{{ slide.content }}</p>
+                                    {% endif %}
+                                </figcaption>
+                            {% endif %}
+                        </figure>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+    </div>
